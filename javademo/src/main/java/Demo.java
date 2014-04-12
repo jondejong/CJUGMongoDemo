@@ -1,7 +1,4 @@
 import com.mongodb.*;
-import com.mongodb.DB;
-import java.util.Set;
-
 
 public class Demo {
 
@@ -11,10 +8,18 @@ public class Demo {
         mongoClient.setWriteConcern(WriteConcern.ACKNOWLEDGED);
         DB db = mongoClient.getDB("cjug");
 
-        Set<String> collectionNames = db.getCollectionNames();
+        DBCollection collection = db.getCollection("people");
 
-        for (String collectionName : collectionNames) {
-            System.out.println(collectionName);
+        println("People count: " + collection.getCount());
+
+        println("All people: ");
+        DBCursor cursor = collection.find();
+        try {
+            while(cursor.hasNext()) {
+                println(cursor.next());
+            }
+        } finally {
+            cursor.close();
         }
     }
 
@@ -29,4 +34,7 @@ public class Demo {
 
     }
 
+    private void println(Object s) {
+        System.out.println(s.toString());
+    }
 }
