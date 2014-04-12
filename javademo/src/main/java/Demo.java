@@ -1,20 +1,29 @@
 import com.mongodb.*;
 
+import java.util.Random;
+
 public class Demo {
 
     private void doStuff() throws Exception {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
-        // This is not needed as it's the default
-        mongoClient.setWriteConcern(WriteConcern.ACKNOWLEDGED);
         DB db = mongoClient.getDB("cjug");
 
         DBCollection collection = db.getCollection("people");
-        collection.createIndex(new BasicDBObject("name", 1));
+        Random statusRandom = new Random();
+        Random ageRandom = new Random();
 
-        BasicDBObject query = new BasicDBObject("name", "Jonny");
+        for(int i=0; i<20;i++) {
+            BasicDBObject person = new BasicDBObject("name", "Jonny").
+                    append("status", statusRandom.nextBoolean() ? "Awesome" : "Almost Awesome").
+                    append("age", ageRandom.nextInt(60));
+            collection.insert(person);
+        }
+
+        BasicDBObject query = new BasicDBObject("age",
+                new BasicDBObject("$gt", 50));
 
         DBCursor cursor = collection.find(query);
-        println("People named Jonny (" + cursor.count() + "): ");
+        println("People over 50 (" + cursor.count() + "): ");
         try {
             while(cursor.hasNext()) {
                 println(cursor.next());
@@ -22,7 +31,6 @@ public class Demo {
         } finally {
             cursor.close();
         }
-
     }
 
     public static void main(String[] args) {
