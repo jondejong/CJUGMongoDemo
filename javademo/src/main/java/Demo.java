@@ -7,6 +7,8 @@ public class Demo {
 
     private void doStuff() throws Exception {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
+        // This is not needed as it's the default
+        mongoClient.setWriteConcern(WriteConcern.ACKNOWLEDGED);
         DB db = mongoClient.getDB("cjug");
 
         Set<String> collectionNames = db.getCollectionNames();
