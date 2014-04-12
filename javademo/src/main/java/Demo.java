@@ -10,10 +10,10 @@ public class Demo {
 
         DBCollection collection = db.getCollection("people");
 
-        println("People count: " + collection.getCount());
+        BasicDBObject query = new BasicDBObject("name", "Jonny");
 
-        println("All people: ");
-        DBCursor cursor = collection.find();
+        DBCursor cursor = collection.find(query);
+        println("People named Jonny (" + cursor.count() + "): ");
         try {
             while(cursor.hasNext()) {
                 println(cursor.next());
@@ -21,6 +21,7 @@ public class Demo {
         } finally {
             cursor.close();
         }
+
     }
 
     public static void main(String[] args) {
