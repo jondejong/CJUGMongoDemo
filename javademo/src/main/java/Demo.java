@@ -22,16 +22,18 @@ public class Demo {
                 new BasicDBObject("$lt", 20));
 
         DBCursor cursor = collection.find(query);
+
+        // Individual document update
         try {
             println("People under 20 before update: " + cursor.count());
+            while(cursor.hasNext()) {
+                DBObject person = cursor.next();
+                person.put("age", 20);
+                collection.save(person);
+            }
         } finally {
             cursor.close();
         }
-
-        // Bulk update
-        BasicDBObject update = new BasicDBObject("$set",
-                new BasicDBObject("age", 20));
-        collection.updateMulti(query, update);
 
         cursor = collection.find(query);
         try {
