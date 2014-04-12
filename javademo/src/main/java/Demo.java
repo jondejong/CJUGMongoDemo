@@ -9,6 +9,7 @@ public class Demo {
         DB db = mongoClient.getDB("cjug");
 
         DBCollection collection = db.getCollection("people");
+        collection.createIndex(new BasicDBObject("name", 1));
 
         BasicDBObject query = new BasicDBObject("name", "Jonny");
 
