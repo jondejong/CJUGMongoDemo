@@ -7,30 +7,37 @@ public class Demo {
     private void doStuff() throws Exception {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
         DB db = mongoClient.getDB("cjug");
-
-        DBCollection collection = db.getCollection("people");
         Random statusRandom = new Random();
         Random ageRandom = new Random();
 
-        for(int i=0; i<20;i++) {
+        DBCollection collection = db.getCollection("people");
+        for (int i = 0; i < 20; i++) {
             BasicDBObject person = new BasicDBObject("name", "Jonny").
                     append("status", statusRandom.nextBoolean() ? "Awesome" : "Almost Awesome").
                     append("age", ageRandom.nextInt(60));
             collection.insert(person);
         }
 
-        BasicDBObject query = new BasicDBObject("age",
-                new BasicDBObject("$gt", 50));
+        DBCursor cursor = collection.find();
+        println("Before delete count: " + cursor.count());
 
-        DBCursor cursor = collection.find(query);
-        println("People over 50 (" + cursor.count() + "): ");
+        BasicDBObject query = new BasicDBObject("age",
+                new BasicDBObject("$lt", 20));
+
+        cursor = collection.find(query);
+        println("People under 20 (" + cursor.count() + "): ");
         try {
-            while(cursor.hasNext()) {
-                println(cursor.next());
+            while (cursor.hasNext()) {
+                DBObject person = cursor.next();
+                println("deleting" + person);
+                collection.remove(person);
             }
         } finally {
             cursor.close();
         }
+
+        cursor = collection.find();
+        println("After delete count: " + cursor.count());
     }
 
     public static void main(String[] args) {
@@ -38,7 +45,7 @@ public class Demo {
 
         try {
             demo.doStuff();
-        }catch(Throwable t) {
+        } catch (Throwable t) {
             t.printStackTrace();
         }
 
