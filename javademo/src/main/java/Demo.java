@@ -18,26 +18,28 @@ public class Demo {
             collection.insert(person);
         }
 
-        DBCursor cursor = collection.find();
-        println("Before delete count: " + cursor.count());
-
         BasicDBObject query = new BasicDBObject("age",
                 new BasicDBObject("$lt", 20));
 
-        cursor = collection.find(query);
-        println("People under 20 (" + cursor.count() + "): ");
+        DBCursor cursor = collection.find(query);
         try {
-            while (cursor.hasNext()) {
-                DBObject person = cursor.next();
-                println("deleting" + person);
-                collection.remove(person);
-            }
+            println("People under 20 before update: " + cursor.count());
         } finally {
             cursor.close();
         }
 
-        cursor = collection.find();
-        println("After delete count: " + cursor.count());
+        // Bulk update
+        BasicDBObject update = new BasicDBObject("$set",
+                new BasicDBObject("age", 20));
+        collection.updateMulti(query, update);
+
+        cursor = collection.find(query);
+        try {
+            println("After update count: " + cursor.count());
+        }finally {
+            cursor.close();
+        }
+
     }
 
     public static void main(String[] args) {
