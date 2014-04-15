@@ -15,7 +15,7 @@ class Person {
     }
 
     static mapping = {
-        writeConcern WriteConcern.NORMAL
+//        writeConcern WriteConcern.ACKNOWLEDGED
     }
 
     static constraints = {
