@@ -11,6 +11,40 @@
 
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: familyInstance, field: 'address.line1', 'error')} ">
+    <label for="familyName">
+        <g:message code="family.address.line1.label" default="Address Line 1" />
+
+    </label>
+    <g:textField name="address.line1" value="${familyInstance?.address?.line1}" />
+
+</div>
+<div class="fieldcontain ${hasErrors(bean: familyInstance, field: 'address.city', 'error')} ">
+    <label for="familyName">
+        <g:message code="family.address.city.label" default="City" />
+
+    </label>
+    <g:textField name="address.city" value="${familyInstance?.address?.city}" />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: familyInstance, field: 'address.state', 'error')} ">
+    <label for="familyName">
+        <g:message code="family.address.state.label" default="State" />
+
+    </label>
+    <g:textField name="address.state" value="${familyInstance?.address?.state}" />
+
+</div>
+<div class="fieldcontain ${hasErrors(bean: familyInstance, field: 'address.postalCode', 'error')} ">
+    <label for="familyName">
+        <g:message code="family.address.postalCode.label" default="Postal Code" />
+
+    </label>
+    <g:textField name="address.postalCode" value="${familyInstance?.address?.postalCode}" />
+
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: familyInstance, field: 'people', 'error')} ">
 	<label for="people">
 		<g:message code="family.people.label" default="People" />
