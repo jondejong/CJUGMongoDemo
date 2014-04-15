@@ -19,14 +19,18 @@ public class Demo {
         }
 
         DBCursor cursor = collection.find();
-        println("Before delete count: " + cursor.count());
+        try {
+            println("Before delete count: " + cursor.count());
+        } finally {
+            cursor.close();
+        }
 
         BasicDBObject query = new BasicDBObject("age",
                 new BasicDBObject("$lt", 20));
 
         cursor = collection.find(query);
-        println("People under 20 (" + cursor.count() + "): ");
         try {
+            println("People under 20 (" + cursor.count() + "): ");
             while (cursor.hasNext()) {
                 DBObject person = cursor.next();
                 println("deleting" + person);
@@ -37,7 +41,11 @@ public class Demo {
         }
 
         cursor = collection.find();
-        println("After delete count: " + cursor.count());
+        try {
+            println("After delete count: " + cursor.count());
+        } finally {
+            cursor.close();
+        }
     }
 
     public static void main(String[] args) {
