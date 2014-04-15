@@ -23,8 +23,8 @@ public class Demo {
                 new BasicDBObject("$gt", 50));
 
         DBCursor cursor = collection.find(query);
-        println("People over 50 (" + cursor.count() + "): ");
         try {
+            println("People over 50 (" + cursor.count() + "): ");
             while(cursor.hasNext()) {
                 println(cursor.next());
             }
