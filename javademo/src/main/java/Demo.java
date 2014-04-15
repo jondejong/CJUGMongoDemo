@@ -10,11 +10,10 @@ public class Demo {
 
         DBCollection collection = db.getCollection("people");
 
-        println("People count: " + collection.getCount());
-
-        println("All people: ");
         DBCursor cursor = collection.find();
         try {
+            println("People count: " + collection.getCount());
+            println("All people: ");
             while(cursor.hasNext()) {
                 println(cursor.next());
             }
