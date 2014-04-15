@@ -1,5 +1,6 @@
 package mongo.demo
 
+import com.mongodb.WriteConcern
 import org.bson.types.ObjectId
 
 class Person {
@@ -11,6 +12,10 @@ class Person {
 
     String toString() {
         "${firstName} ${lastName}"
+    }
+
+    static mapping = {
+        writeConcern WriteConcern.NORMAL
     }
 
     static constraints = {

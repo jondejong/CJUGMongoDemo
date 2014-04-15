@@ -3,8 +3,7 @@ package mongo.demo
 import grails.converters.JSON
 
 class CityController {
-
-    def fileName = '/Users/jondejong/projects/mongo-demo/citydata/citydata.csv'
+    def fileName = '/Users/jondejong/CJUG/code/grailsdemo/citydata/citydata.csv'
 
     def near() {
         def center = [Double.parseDouble(params.lat), Double.parseDouble(params.long)]
@@ -40,7 +39,6 @@ class CityController {
 
         def count = 0
         dataFile.eachLine {
-//            println "Reading ${it}"
             def tokens = it.split(",")
             tokens = tokens.collect{it.replace("\"", "")}
             if(tokens[1] == "US" && tokens[2] && tokens[3] && tokens[5].isDouble() && tokens[6].isDouble()) {
