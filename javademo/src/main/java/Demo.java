@@ -13,8 +13,8 @@ public class Demo {
         BasicDBObject query = new BasicDBObject("name", "Jonny");
 
         DBCursor cursor = collection.find(query);
-        println("People named Jonny (" + cursor.count() + "): ");
         try {
+            println("People named Jonny (" + cursor.count() + "): ");
             while(cursor.hasNext()) {
                 println(cursor.next());
             }
