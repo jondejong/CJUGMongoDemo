@@ -9,13 +9,15 @@ public class Demo {
         DB db = mongoClient.getDB("cjug");
 
         DBCollection collection = db.getCollection("people");
+
+        // Creating an index -- Note, this is a blocking call
         collection.createIndex(new BasicDBObject("name", 1));
 
         BasicDBObject query = new BasicDBObject("name", "Jonny");
 
         DBCursor cursor = collection.find(query);
-        println("People named Jonny (" + cursor.count() + "): ");
         try {
+            println("People named Jonny (" + cursor.count() + "): ");
             while(cursor.hasNext()) {
                 println(cursor.next());
             }
