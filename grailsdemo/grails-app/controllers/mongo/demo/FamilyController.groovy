@@ -43,6 +43,8 @@ class FamilyController {
             return
         }
 
+//        familyInstance['otherField'] = "Jon was here"
+
         familyInstance.save flush: true
 
         request.withFormat {
